@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM Info Pakistan</title>
+    
+   
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    background: #222;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    text-align: center;
+    width: 100%;           /* Make the container full width */
+    max-width: 450px;      /* Max width ensures it doesn't stretch too wide */
+    margin: 0 auto;        /* Horizontally center the container */
+    box-sizing: border-box; /* Ensures padding is included in the width */
+    transition: box-shadow 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 1);
+}
+
+input, button {
+    width: 100%;  /* Ensures inputs and button are 100% width inside container */
+    padding: 12px;  /* Equal padding for left and right */
+    margin: 8px 0;
+    border-radius: 10px;
+    border: 2px solid #00fff7;
+    background: #222;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;  /* Ensures padding and border are included in width */
+    transition: all 0.3s ease-in-out;
+}
+
+input:focus, button:hover {
+    border: 2px solid #ff4081;
+    box-shadow: 0 0 15px #ff4081;
+    background-color: #333;
+}
+
+button {
+    background-color: #00fff7;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 12px;
+    width: 100%; /* Adjust the button width to make it equal with the input */
+    position: relative;
+    overflow: hidden;
+    animation: buttonGlow 3s linear infinite;
+}
+
+button:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, #ff4081, #00fff7, #ff4081, #00fff7);
+    animation: glowing 3s linear infinite;
+    z-index: -1;
+}
+
+@keyframes glowing {
+    0% {transform: translate(0, 0);}
+    50% {transform: translate(10px, 10px);}
+    100% {transform: translate(0, 0);}
+}
+
+@keyframes buttonGlow {
+    0% {box-shadow: 0 0 15px rgba(255, 64, 129, 0.7);}
+    50% {box-shadow: 0 0 25px rgba(255, 64, 129, 1);}
+    100% {box-shadow: 0 0 15px rgba(255, 64, 129, 0.7);}
+}
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    background: #333;
+    border: 2px solid #00fff7;
+    width: 100%;
+    box-sizing: border-box; /* Prevents width overflow */
+    max-width: 100%; /* Ensures the result fits within the container */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+    display: none;
+    animation: resultGlow 3s infinite alternate;
+}
+
+@keyframes resultGlow {
+    0% {box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);}
+    50% {box-shadow: 0 0 30px rgba(0, 255, 255, 1);}
+    100% {box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);}
+}
+
+.response-item {
+    margin: 8px 0;
+    font-size: 18px;
+    color: #ff4081;
+    text-shadow: 0 0 10px rgba(255, 64, 129, 0.7);
+}
+
+.response-item span {
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 0 15px #ff4081;
+}
+
+#responseName {color: #00fff7; text-shadow: 0 0 10px #00fff7;}
+#responseCnic {color: #ff4081; text-shadow: 0 0 10px #ff4081;}
+#responseAddress {color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b;}
+#responseMobiles {color: #ff80ff; text-shadow: 0 0 10px #ff80ff;}
+
+.loading-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #00fff7;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+#downloadBtn {
+    margin-top: 20px;
+    display: none;
+    padding: 12px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#downloadBtn:hover {
+    background-color: #ff80bf;
+}
+
+.developer-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff4081;
+    text-shadow: 0 0 10px rgba(255, 64, 129, 0.7), 0 0 20px rgba(255, 64, 129, 0.5), 0 0 30px rgba(255, 64, 129, 0.3);
+    position: fixed;
+    bottom: 30px;
+    text-align: center;
+    width: 100%;
+    animation: zoomEffect 3s ease-in-out infinite;
+}
+
+@keyframes zoomEffect {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}
+
+.telegram-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 64, 129, 0.7);
+    animation: rotateImage 5s linear infinite, buttonGlow 3s linear infinite;
+}
+
+.telegram-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.telegram-button img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes rotateImage {
+    0% {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);}
+}
+
+/* Fixing any overflow issues, especially on smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin-left: auto;     /* Ensures the container is centered */
+        margin-right: auto;    /* Ensures the container is centered */
+    }
+    .result {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        padding: 30px;
+    }
+    input, button {font-size: 15px;}
+    button {width: 60%;}
+    .response-item {font-size: 17px;}
+    .telegram-button {width: 55px; height: 55px;}
+}
+
+@media (min-width: 1025px) {
+    .container {max-width: 600px;}
+    input, button {font-size: 16px;}
+    .response-item {font-size: 18px;}
+    .telegram-button {width: 60px; height: 60px;}
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>𝗣𝗮𝗸 𝗦𝗶𝗺 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻</h2>
+        <form id="searchForm">
+            <input type="text" id="phone" placeholder="Enter Phone Number (e.g 03xx)" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="loading" class="loading-spinner" style="display: none;"></div>
+
+        <div id="result" class="result">
+            <h3>Result</h3>
+            <div id="responseName" class="response-item"></div>
+            <div id="responseCnic" class="response-item"></div>
+            <div id="responseAddress" class="response-item"></div>
+            <div id="responseMobiles" class="response-item"></div>
+        </div>
+        
+        <button id="downloadBtn">Download Result</button>
+    </div>
+
+    <div class="developer-text">𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗱 𝗕𝘆 YAMI</div>
+    
+    <div class="telegram-button">
+    <a href="https://t.me/Musa_x2" target="_blank">
+        <img src="Musa.jpg" alt="Telegram" />
+    </a>
+</div>
+
+    <script>
+        // Event listener for form submission
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+
+            const phone = document.getElementById('phone').value; // Get phone number input
+            const resultDiv = document.getElementById('result'); // Result container
+            const downloadBtn = document.getElementById('downloadBtn'); // Download button
+            const loadingDiv = document.getElementById('loading'); // Loading spinner
+
+            // Reset result and hide the container
+            resultDiv.style.display = "none";
+            downloadBtn.style.display = "none";
+            loadingDiv.style.display = "block"; // Show loading spinner
+
+            // Clear previous response data
+            document.getElementById('responseName').innerHTML = '';
+            document.getElementById('responseCnic').innerHTML = '';
+            document.getElementById('responseAddress').innerHTML = '';
+            document.getElementById('responseMobiles').innerHTML = '';
+
+            // Fetch data from the API
+            fetch(`https://musasimdatabase.infy.uk/api.php?phone_number=${encodeURIComponent(phone)}`)
+                .then(response => response.json())
+                .then(data => {
+                    loadingDiv.style.display = "none"; // Hide loading spinner
+
+                    if (data.error) {
+                       resultDiv.innerHTML = `<p class="error">${data.error}</p>`;
+                    }
+                     else {
+                        // Ensure only unique data is shown once
+                        const name = data.name ? `<strong>Name:</strong> <span>${data.name}</span>` : '';
+                        const cnic = data.cnic ? `<strong>CNIC:</strong> <span>${data.cnic}</span>` : '';
+                        const address = data.address ? `<strong>Address:</strong> <span>${data.address}</span>` : '';
+                        const mobiles = data.mobiles ? `<strong>Mobile Numbers:</strong> <span>${data.mobiles.join(', ')}</span>` : '';
+
+                        // Display data only once
+                        document.getElementById('responseName').innerHTML = name;
+                        document.getElementById('responseCnic').innerHTML = cnic;
+                        document.getElementById('responseAddress').innerHTML = address;
+                        document.getElementById('responseMobiles').innerHTML = mobiles;
+
+                        resultDiv.style.display = "block"; // Show result container
+                        downloadBtn.style.display = "inline-block"; // Show download button
+                    }
+                })
+                .catch(err => {
+                    loadingDiv.style.display = "none"; // Hide loading spinner
+                    resultDiv.innerHTML = `<p class="error">An error occurred: ${err.message}</p>`;
+                });
+        });
+
+        // Download the response as a text file
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const phone = document.getElementById('phone').value;
+            const result = {
+                name: document.getElementById('responseName').innerText,
+                cnic: document.getElementById('responseCnic').innerText,
+                address: document.getElementById('responseAddress').innerText,
+                mobiles: document.getElementById('responseMobiles').innerText
+            };
+
+            const data = JSON.stringify(result, null, 4); // Convert response to JSON format with indentation
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `detail_${phone}.txt`; // Download file with custom name
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
